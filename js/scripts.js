@@ -1,7 +1,23 @@
-var numbersInWords = function(numberInput){
+var splitter = function(numberInput){
   var numberString = numberInput.toString();
   var numberArray = numberString.split("").map(Number);
-  var l = numberArray.length;
+  var bigArray = [];
+  var originalLength = numberArray.length;
+
+  for (var i=0; i<originalLength; i+=3) {
+
+  bigArray.push(numberArray.slice(-3));
+  numberArray.splice(((numberArray.length)-3), 3);
+}
+  return bigArray.reverse();
+
+  //result [[1,2,3],[4,5,6],[7,8,9]]
+}
+
+var numbersInWords = function(bigArray){
+  // var numberString = numberInput.toString();
+  // var numberArray = numberString.split("").map(Number);
+
   var finalArray = [];
 
 
@@ -12,26 +28,31 @@ var numbersInWords = function(numberInput){
   var tensWords = { 2: "twenty", 3: "thirty", 4: "forty", 5: "fifty", 6: "sixty", 7: "seventy", 8: "eighty", 9: "ninety" };
 
 
-  if (l === 3) {
-    finalArray.push(onesWords[numberArray[0]] + " " + "hundred");
+  for (var i=0; i<bigArray.length; i++) {
 
-  };
-  if (numberArray[l-2] >= 2) {
-    finalArray.push(tensWords[numberArray[l-2]] + " " + onesWords[numberArray[l-1]]);
+    var l = bigArray[i].length;
 
-  } else if (numberArray[l-2] === 1) {
-    var teenNumber = "1" + numberArray[l-1];
-    var teenNumberInt = parseInt(teenNumber);
-    finalArray.push(teensWords[teenNumberInt]);
+    if (l === 3) {    //hundreds
+      finalArray.push(onesWords[bigArray[i][0]] + " " + "hundred");
+    }
+    // } else if (l === 3 && bigArray[i][1] === 0)
 
-  }
-  else if (l=1 && numberArray[0] === 0) {
-    finalArray.push("zero");
-  } else if (l = 1) {
-    finalArray.push(onesWords[numberArray[0]]);
-  };
+    if (bigArray[i][l-2] >= 2) { //20-99
+      finalArray.push(tensWords[bigArray[i][l-2]] + " " + onesWords[bigArray[i][l-1]]);
 
-return finalArray.join(" ");
+    } else if (bigArray[i][l-2] === 1) { //teens
+      var teenNumber = "1" + bigArray[i][l-1];
+      var teenNumberInt = parseInt(teenNumber);
+      finalArray.push(teensWords[teenNumberInt]);
 
+    } else if (l=1 && bigArray[i][0] === 0) {     //zero
+      finalArray.push("zero");
+
+    } else if (l = 1) {   //ones
+      finalArray.push(onesWords[bigArray[i][0]]);
+    };
+   console.log(finalArray);
+
+   return finalArray.join("");
 }
-
+}
