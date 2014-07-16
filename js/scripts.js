@@ -1,5 +1,6 @@
-var splitter = function(numberInput){
-  var numberString = numberInput.toString();
+var splitter = function(numberString){
+  // var numberString = numberInput.toString();
+  console.log(numberString);
   var numberArray = numberString.split("").map(Number);
   var bigArray = [];
   var originalLength = numberArray.length;
@@ -14,10 +15,10 @@ var splitter = function(numberInput){
   //result [[1,2,3],[4,5,6],[7,8,9]]
 }
 
-var numbersInWords = function(bigArray){
+var numbersInWords = function(numberString){
   // var numberString = numberInput.toString();
   // var numberArray = numberString.split("").map(Number);
-
+  var bigArray = splitter(numberString);
   var finalArray = [];
 
 
@@ -51,8 +52,8 @@ var numbersInWords = function(bigArray){
     } else if (l = 1) {   //ones
       finalArray.push(onesWords[bigArray[i][0]]);
     };
-   console.log(finalArray);
+   // console.log(finalArray);
 
-   return finalArray.join("");
+   return finalArray.join(" ");
 }
 }
